@@ -1,0 +1,77 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    list-style: none;
+}
+
+li {
+    margin: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+.btn-title {
+    margin: 10px;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color:  #007bff;
+    font-size: 15px;
+    color: white;  
+}
+
+.btn-title:hover {
+    background-color: #0056b3; 
+}
+
+#Aviao {
+    display: flex;
+    padding: 5px;
+    justify-content: space-evenly;
+}
+
+.img-aviao {
+    height: 200px;
+    width: 350px;
+}
+
+#titulo {
+text-align: center;
+}
+
+footer {
+    background-color: grey;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-footer {
+    width: 100px;
+    height: 70px;
+    margin: 5px;
+}
+
+.btn-footer {
+    margin: 10px;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color:  #007bff;
+    font-size: 15px;
+    color: white;
+}
+
+.btn-footer:hover {
+    background-color: #0056b3; 
+}
