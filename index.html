@@ -38,6 +38,14 @@
 
     </ul>
 
+    <h2 id="titulo">Consumir dados de uma API(GET)</h2>
+    <input type="button" value="chamarApi" onclick="consumirAPI()">
+    <form>
+        <p>Mensagem API: <input type="text" id="API"></p>
+        <P>Cidade: <input type="text" id="cidade"></P>
+        <p>Faculdade: <input type="text" id="faculdade"></p>
+    </form>
+
     <footer>
         <img class="img-footer" src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png" alt="Login da FIAP">
         <p>Amanda Cornelsen</p>
@@ -79,6 +87,19 @@
             }
         }
     
+        function consumirAPI(){
+            fetch("http://demo3298209.mockable.io/lista_exercicio")
+            .then(response => response.json()) //Pega um objeto e converte para json
+            .then(data => tratarDados(data))
+            .catch(error => console.log(error))
+        }
+
+        function tratarDados(data) {
+            console.log(data)
+            document.getElementById("API").value = data.mensagem;
+            document.getElementById("cidade").value = data.cidade;
+            document.getElementById("faculdade").value = data.faculdade;
+        }
 
 
     </script>
