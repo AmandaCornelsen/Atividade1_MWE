@@ -30,6 +30,14 @@
     <h2 id="titulo">Mudar Cor</h2>
     <input type="button" value="Mudar cor dos botões" onclick="mudarCor()">
 
+    <h2 id="titulo">Adicionar Item e Remover</h2>
+    <input type="text" id="itemLista" placeholder="Digite algo para sua lista aqui">
+    <input type="button" value="Adicionar Item" onclick="criarLista()">
+
+    <ul id="minhaLista">
+
+    </ul>
+
     <footer>
         <img class="img-footer" src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png" alt="Login da FIAP">
         <p>Amanda Cornelsen</p>
@@ -52,7 +60,27 @@
             }
         }
 
-        
+        function criarLista() {
+            let adicionarItem = document.getElementById("itemLista");
+            let lista = document.getElementById("minhaLista");
+
+            if(adicionarItem.value.trim() !== "") {
+                let criarItem = document.createElement("li");
+                criarItem.textContent = adicionarItem.value;
+
+                criarItem.ondblclick = function() {
+                    lista.removeChild(criarItem);
+                };
+
+                lista.appendChild(criarItem);
+                input.value ="";
+            } else {
+                alert("Insira um valor no campo de texto antes de adicionar item")
+            }
+        }
+    
+
+
     </script>
 
 </html>
