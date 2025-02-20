@@ -40,11 +40,28 @@
 
     <h2 id="titulo">Consumir dados de uma API(GET)</h2>
     <input type="button" value="chamarApi" onclick="consumirAPI()">
-    <form>
+    <div>
         <p>Mensagem API: <input type="text" id="API"></p>
         <P>Cidade: <input type="text" id="cidade"></P>
         <p>Faculdade: <input type="text" id="faculdade"></p>
+    </div>
+
+    <h2 id="titulo">Enviar dados para a API(POST)</h2>
+
+    <form action="post" id="formulario">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <br><br>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <button type="submit" onclick="enviarDadosAPI()">Enviar</button>
     </form>
+
+    <h3>Resposta do Servidor:</h3>
+    <p id="resposta"></p>
 
     <footer>
         <img class="img-footer" src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png" alt="Login da FIAP">
@@ -89,7 +106,7 @@
     
         function consumirAPI(){
             fetch("http://demo3298209.mockable.io/lista_exercicio")
-            .then(response => response.json()) //Pega um objeto e converte para json
+            .then(response => response.json())
             .then(data => tratarDados(data))
             .catch(error => console.log(error))
         }
@@ -99,6 +116,38 @@
             document.getElementById("API").value = data.mensagem;
             document.getElementById("cidade").value = data.cidade;
             document.getElementById("faculdade").value = data.faculdade;
+        }
+
+        function enviarDadosAPI() {
+            document.getElementById("formulario").addEventListener("submit", async function(event) {
+            event.preventDefault(); 
+
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+
+            let dados = {
+                nome: nome,
+                email: email
+            };
+
+            try {
+                let response = await fetch("http://demo3298209.mockable.io/formulariopost", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                let respostaServidor = await response.json();
+
+                document.getElementById("resposta").innerText = JSON.stringify(respostaServidor, null, 2);
+
+            } catch (error) {
+                document.getElementById("resposta").innerText = "Erro ao enviar os dados.";
+                console.error("Erro:", error);
+            }
+        })
         }
 
 
