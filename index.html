@@ -13,17 +13,23 @@
     <header>
         <h1>Atividade 1</h1>
         <nav>
-            <li><a class="btn-title" href="home">Home</a></li>
-            <li><a class="btn-title" href="Rodape">Rodapé</a></li>
+            <li><a class="btn-title" href="#home">Home</a></li>
+            <li><a class="btn-title" href="#rodape">Rodapé</a></li>
         </nav>
     </header>
 
-    <h2 id="titulo">Aviões</h2>
+    <h2 id="titulo" id="home">Aviões</h2>
     <section>
         <section id="Aviao">
-            <img class="img-aviao" src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Imagem de avião voando em meio a nuvens">
-            <img class="img-aviao" src="https://images.pexels.com/photos/164589/pexels-photo-164589.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Imagem de avião decolando">
-            <img class="img-aviao" src="https://images.pexels.com/photos/358220/pexels-photo-358220.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Imagem de avião no solo">
+            <img class="img-aviao"
+                src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg?auto=compress&cs=tinysrgb&w=300"
+                alt="Imagem de avião voando em meio a nuvens">
+            <img class="img-aviao"
+                src="https://images.pexels.com/photos/164589/pexels-photo-164589.jpeg?auto=compress&cs=tinysrgb&w=300"
+                alt="Imagem de avião decolando">
+            <img class="img-aviao"
+                src="https://images.pexels.com/photos/358220/pexels-photo-358220.jpeg?auto=compress&cs=tinysrgb&w=300"
+                alt="Imagem de avião no solo">
         </section>
     </section>
 
@@ -64,79 +70,81 @@
     <p id="resposta"></p>
 
     <h2 id="titulo">Exibir dados retornados em tabela</h2>
-<button onclick="receberDadosTabela()">Carregar Dados</button>
-<table id="dadosTabela" border="1">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Idade</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-    </tbody>
-</table>
+    <button onclick="receberDadosTabela()">Carregar Dados</button>
+    <button onclick="mostrarItensFiltrados()">Filtro idade</button>
+    <table id="dadosTabela" border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Idade</th>
+            </tr>
+        </thead>
+        <tbody>
 
+        </tbody>
+    </table>
 
-    <footer>
-        <img class="img-footer" src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png" alt="Login da FIAP">
+    <footer id="rodape">
+        <img class="img-footer"
+            src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png"
+            alt="Login da FIAP">
         <p>Amanda Cornelsen</p>
-        <a class="btn-footer" href="https://github.com/AmandaCornelsen?tab=repositories">Github</a>
+        <a class="btn-footer" href="https://github.com/AmandaCornelsen?tab=repositories" target="_blank">Github</a>
     </footer>
 
 </body>
 
-    <script>
-        function mudarCor() {
-            let btn = document.querySelectorAll(".btn-title, .btn-footer");
+<script>
+    function mudarCor() {
+        let btn = document.querySelectorAll(".btn-title, .btn-footer");
 
-            for (let i = 0; i < btn.length; i++) {
-                
-                if(btn[i].style.backgroundColor === "pink") {
-                    btn[i].style.backgroundColor = "blue";
-                } else {
-                   btn[i].style.backgroundColor = "pink";
-                }
-            }
-        }
+        for (let i = 0; i < btn.length; i++) {
 
-        function criarLista() {
-            let adicionarItem = document.getElementById("itemLista");
-            let lista = document.getElementById("minhaLista");
-
-            if(adicionarItem.value.trim() !== "") {
-                let criarItem = document.createElement("li");
-                criarItem.textContent = adicionarItem.value;
-
-                criarItem.ondblclick = function() {
-                    lista.removeChild(criarItem);
-                };
-
-                lista.appendChild(criarItem);
-                input.value ="";
+            if (btn[i].style.backgroundColor === "pink") {
+                btn[i].style.backgroundColor = "blue";
             } else {
-                alert("Insira um valor no campo de texto antes de adicionar item")
+                btn[i].style.backgroundColor = "pink";
             }
         }
-    
-        function consumirAPI(){
-            fetch("http://demo3298209.mockable.io/lista_exercicio")
+    }
+
+    function criarLista() {
+        let adicionarItem = document.getElementById("itemLista");
+        let lista = document.getElementById("minhaLista");
+
+        if (adicionarItem.value.trim() !== "") {
+            let criarItem = document.createElement("li");
+            criarItem.textContent = adicionarItem.value;
+
+            criarItem.ondblclick = function () {
+                lista.removeChild(criarItem);
+            };
+
+            lista.appendChild(criarItem);
+            input.value = "";
+        } else {
+            alert("Insira um valor no campo de texto antes de adicionar item")
+        }
+    }
+
+    function consumirAPI() {
+        fetch("http://demo3298209.mockable.io/lista_exercicio")
             .then(response => response.json())
             .then(data => tratarDados(data))
             .catch(error => console.log(error))
-        }
+    }
 
-        function tratarDados(data) {
-            console.log(data)
-            document.getElementById("API").value = data.mensagem;
-            document.getElementById("cidade").value = data.cidade;
-            document.getElementById("faculdade").value = data.faculdade;
-        }
+    function tratarDados(data) {
+        console.log(data)
+        document.getElementById("API").value = data.mensagem;
+        document.getElementById("cidade").value = data.cidade;
+        document.getElementById("faculdade").value = data.faculdade;
+    }
 
-        function enviarDadosAPI() {
-            document.getElementById("formulario").addEventListener("submit", async function(event) {
-            event.preventDefault(); 
+    function enviarDadosAPI() {
+        document.getElementById("formulario").addEventListener("submit", async function (event) {
+            event.preventDefault();
 
             let nome = document.getElementById("nome").value;
             let email = document.getElementById("email").value;
@@ -164,18 +172,43 @@
                 console.error("Erro:", error);
             }
         })
-        }
+    }
 
-        function receberDadosTabela() {
-            fetch("http://demo3298209.mockable.io/usuariotabela")
+    function receberDadosTabela() {
+        fetch("http://demo3298209.mockable.io/usuariotabela")
             .then(response => response.json())
-       
-            .then(data => { 
 
-            let corpoTabela = document.querySelector("#dadosTabela tbody");
-            corpoTabela.innerHTML = "";
+            .then(data => {
 
-            data.forEach(user => {
+                let corpoTabela = document.querySelector("#dadosTabela tbody");
+                corpoTabela.innerHTML = "";
+
+                data.forEach(user => {
+                    let linha = document.createElement("tr");
+
+                    linha.innerHTML = `
+                    <td>${user.nome}</td>
+                    <td>${user.email}</td>
+                    <td>${user.idade}</td>
+                `;
+
+                    corpoTabela.appendChild(linha);
+                });
+            })
+            .catch(error => console.error("Erro ao buscar os dados:", error));
+    }
+
+    function mostrarItensFiltrados() {
+        fetch("http://demo3298209.mockable.io/usuariotabela")
+            .then(response => response.json())
+            .then(data => {
+
+                let menoresDeIdade = data.filter(user => user.idade < 18);
+
+                let corpoTabela = document.querySelector ("#dadosTabela tbody");
+                corpoTabela.innerHTML = "";
+
+                menoresDeIdade.forEach(user => {
                 let linha = document.createElement("tr");
 
                 linha.innerHTML = `
@@ -186,9 +219,12 @@
 
                 corpoTabela.appendChild(linha);
             });
+
+            console.log("Usuários menores de idade:", menoresDeIdade); // Debug no console
         })
         .catch(error => console.error("Erro ao buscar os dados:", error));
-        }
-    </script>
+
+            }
+</script>
 
 </html>
