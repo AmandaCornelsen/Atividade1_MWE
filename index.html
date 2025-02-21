@@ -74,7 +74,8 @@
         <h3>Resposta do Servidor:</h3>
         <p id="resposta"></p>
     </section>
-    <section>
+    
+    <section id="crud">
         <h2 id="titulo">Exibir dados retornados em tabela</h2>
         <button onclick="receberDadosTabela()">Carregar Dados</button>
         <button onclick="mostrarItensFiltrados()">Filtro idade</button>
@@ -87,15 +88,10 @@
                     <th>Açoes</th>
                 </tr>
             </thead>
-            <tbody id="crud">
+            <tbody>
 
             </tbody>
         </table>
-
-        <form id="crudForm">
-            <input type="text" id="itemName" placeholder="Digite um nome" required />
-            <button type="submit">Adicionar</button>
-          </form>
     </section>
 
     <footer id="rodape">
@@ -187,19 +183,17 @@
         })
     }
 
-    function receberDadosTabela() {
-        fetch("http://demo3298209.mockable.io/usuariotabela")
-            .then(response => response.json())
+function receberDadosTabela() {
+    fetch("http://demo3298209.mockable.io/usuariotabela")
+        .then(response => response.json())
+        .then(data => {
+            let corpoTabela = document.querySelector("#dadosTabela tbody");
+            corpoTabela.innerHTML = ""; // Limpa o corpo da tabela antes de adicionar novos dados
 
-            .then(data => {
+            data.forEach(user => {
+                let linha = document.createElement("tr");
 
-                let corpoTabela = document.querySelector("#dadosTabela tbody");
-                corpoTabela.innerHTML = "";
-
-                data.forEach(user => {
-                    let linha = document.createElement("tr");
-
-                    linha.innerHTML = `
+                linha.innerHTML = `
                     <td>${user.nome}</td>
                     <td>${user.email}</td>
                     <td>${user.idade}</td>
@@ -209,14 +203,16 @@
                     </td>
                 `;
 
-                    corpoTabela.appendChild(linha);
+                corpoTabela.appendChild(linha);
 
-                    linha.querySelector(".atualizarTabela").addEventListener("click", () => atualizarTabela(linha));
-                    linha.querySelector(".deletarDados").addEventListener("click", () => deletarDados(linha, user));
-                });
-            })
-            .catch(error => console.error("Erro ao buscar os dados:", error));
-    }
+                // Adiciona o evento de clique para o botão de atualizar
+                linha.querySelector(".atualizarTabela").addEventListener("click", () => atualizarTabela(linha, user));
+                linha.querySelector(".deletarDados").addEventListener("click", () => deletarDados(linha, user));
+            });
+        })
+        .catch(error => console.error("Erro ao buscar os dados:", error));
+}
+
 
     function mostrarItensFiltrados() {
         fetch("http://demo3298209.mockable.io/usuariotabela")
@@ -278,6 +274,66 @@
             event.preventDefault();
         }
     }
+
+    function atualizarTabela(linha, user) {
+    const cells = linha.querySelectorAll("td");
+    const atualizarButton = linha.querySelector(".atualizarTabela");
+
+    if (atualizarButton.textContent === "Atualizar") {
+        // Habilita a edição das células
+        cells.forEach((cell, index) => {
+            if (index < 3) { // Apenas as células de nome, email e idade
+                cell.setAttribute("contenteditable", "true");
+            }
+        });
+        atualizarButton.textContent = "Salvar";
+    } else {
+        // Desabilita a edição das células
+        cells.forEach((cell, index) => {
+            if (index < 3) {
+                cell.setAttribute("contenteditable", "false");
+            }
+        });
+
+        // Captura os dados editados
+        const nomeEditado = cells[0].innerText;
+        const emailEditado = cells[1].innerText;
+        const idadeEditada = cells[2].innerText;
+
+        // Atualiza o objeto user
+        user.nome = nomeEditado;
+        user.email = emailEditado;
+        user.idade = idadeEditada;
+
+        // Envia os dados atualizados para a API via POST
+        fetch("http://demo3298209.mockable.io/usuariotabela", {
+            method: "POST", // Método HTTP POST
+            headers: {
+                "Content-Type": "application/json", // Define o tipo de conteúdo como JSON
+            },
+            body: JSON.stringify(user), // Converte o objeto user para JSON
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Converte a resposta para JSON
+            } else {
+                throw new Error("Erro ao enviar dados para a API");
+            }
+        })
+        .then(data => {
+            // Exibe a mensagem de sucesso
+            alert("Dados atualizados e enviados com sucesso!");
+            console.log("Resposta da API:", data);
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            alert("Ocorreu um erro ao enviar os dados para a API.");
+        });
+
+        // Volta o texto do botão para "Atualizar"
+        atualizarButton.textContent = "Atualizar";
+    }
+}
 
     function deletarDados(linha, user) {
     if (confirm("Tem certeza que deseja excluir este item?")) {
