@@ -63,6 +63,22 @@
     <h3>Resposta do Servidor:</h3>
     <p id="resposta"></p>
 
+    <h2 id="titulo">Exibir dados retornados em tabela</h2>
+<button onclick="receberDadosTabela()">Carregar Dados</button>
+<table id="dadosTabela" border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Idade</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+
     <footer>
         <img class="img-footer" src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png" alt="Login da FIAP">
         <p>Amanda Cornelsen</p>
@@ -150,7 +166,29 @@
         })
         }
 
+        function receberDadosTabela() {
+            fetch("http://demo3298209.mockable.io/usuariotabela")
+            .then(response => response.json())
+       
+            .then(data => { 
 
+            let corpoTabela = document.querySelector("#dadosTabela tbody");
+            corpoTabela.innerHTML = "";
+
+            data.forEach(user => {
+                let linha = document.createElement("tr");
+
+                linha.innerHTML = `
+                    <td>${user.nome}</td>
+                    <td>${user.email}</td>
+                    <td>${user.idade}</td>
+                `;
+
+                corpoTabela.appendChild(linha);
+            });
+        })
+        .catch(error => console.error("Erro ao buscar os dados:", error));
+        }
     </script>
 
 </html>
