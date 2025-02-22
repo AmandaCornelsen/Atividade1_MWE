@@ -35,9 +35,9 @@
         </section>
     </section>
     <section id="centralizar">
-        <section>
+        <section id="centralizar">
             <h2 id="titulo">Mudar Cor</h2>
-            <input id="central" type="button" value="Mudar cor dos botões" onclick="mudarCor()">
+            <input type="button" value="Mudar cor dos botões" onclick="mudarCor()">
 
             <h2 id="titulo">Adicionar Item e Remover</h2>
             <input type="text" id="itemLista" placeholder="Digite algo para sua lista aqui">
@@ -47,7 +47,7 @@
 
             </ul>
         </section>
-        <section>
+        <section id="centralizar">
             <h2 id="titulo">Consumir dados de uma API(GET)</h2>
             <input type="button" value="chamarApi" onclick="consumirAPI()">
             <div>
@@ -56,7 +56,7 @@
                 <p>Faculdade: <input type="text" id="faculdade"></p>
             </div>
         </section>
-        <section>
+        <section id="centralizar">
             <h2 id="titulo">Enviar dados para a API(POST)</h2>
 
             <form id="formulario">
@@ -77,10 +77,12 @@
             <p id="resposta"></p>
         </section>
 
-        <section id="crud">
+        <section id="centralizar" id="crud">
             <h2 id="titulo">Exibir dados retornados em tabela</h2>
+            <section>
             <button onclick="receberDadosTabela()">Carregar Dados</button>
             <button onclick="mostrarItensFiltrados()">Filtro idade</button>
+            </section>
             <table id="dadosTabela" border="1">
                 <thead>
                     <tr>
