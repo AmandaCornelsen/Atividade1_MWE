@@ -14,9 +14,11 @@
         <h1>Atividade 1</h1>
         <nav>
             <li><a class="btn-title" href="#home">Home</a></li>
+            <li><a class="btn-title" href="exercicio10.html">Exercício 10</a></li>
             <li><a class="btn-title" href="#rodape">Rodapé</a></li>
         </nav>
     </header>
+
 
     <h2 id="titulo" id="home">Aviões</h2>
     <section>
@@ -32,66 +34,68 @@
                 alt="Imagem de avião no solo">
         </section>
     </section>
+    <section id="centralizar">
+        <section>
+            <h2 id="titulo">Mudar Cor</h2>
+            <input id="central" type="button" value="Mudar cor dos botões" onclick="mudarCor()">
 
-    <section>
-        <h2 id="titulo">Mudar Cor</h2>
-        <input type="button" value="Mudar cor dos botões" onclick="mudarCor()">
+            <h2 id="titulo">Adicionar Item e Remover</h2>
+            <input type="text" id="itemLista" placeholder="Digite algo para sua lista aqui">
+            <input type="button" value="Adicionar Item" onclick="criarLista()">
 
-        <h2 id="titulo">Adicionar Item e Remover</h2>
-        <input type="text" id="itemLista" placeholder="Digite algo para sua lista aqui">
-        <input type="button" value="Adicionar Item" onclick="criarLista()">
+            <ul id="minhaLista">
 
-        <ul id="minhaLista">
+            </ul>
+        </section>
+        <section>
+            <h2 id="titulo">Consumir dados de uma API(GET)</h2>
+            <input type="button" value="chamarApi" onclick="consumirAPI()">
+            <div>
+                <p>Mensagem API: <input type="text" id="API"></p>
+                <P>Cidade: <input type="text" id="cidade"></P>
+                <p>Faculdade: <input type="text" id="faculdade"></p>
+            </div>
+        </section>
+        <section>
+            <h2 id="titulo">Enviar dados para a API(POST)</h2>
 
-        </ul>
+            <form id="formulario">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome">
+                <span id="erroNome" style="color: red;"></span>
+                <br><br>
+            
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email">
+                <span id="erroEmail" style="color: red;"></span>
+                <br><br>
+            
+                <button type="submit" id="botaoEnviar">Enviar</button>
+            </form>
+            
+            <h3>Resposta do Servidor:</h3>
+            <p id="resposta"></p>
+        </section>
+
+        <section id="crud">
+            <h2 id="titulo">Exibir dados retornados em tabela</h2>
+            <button onclick="receberDadosTabela()">Carregar Dados</button>
+            <button onclick="mostrarItensFiltrados()">Filtro idade</button>
+            <table id="dadosTabela" border="1">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Idade</th>
+                        <th>Açoes</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
     </section>
-    <section>
-        <h2 id="titulo">Consumir dados de uma API(GET)</h2>
-        <input type="button" value="chamarApi" onclick="consumirAPI()">
-        <div>
-            <p>Mensagem API: <input type="text" id="API"></p>
-            <P>Cidade: <input type="text" id="cidade"></P>
-            <p>Faculdade: <input type="text" id="faculdade"></p>
-        </div>
-    </section>
-    <section>
-        <h2 id="titulo">Enviar dados para a API(POST)</h2>
-
-        <form action="post" id="formulario">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome">
-            <br><br>
-
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email">
-            <br><br>
-
-            <button type="submit" id="botaoEnviar" onclick="enviarDadosAPI()">Enviar</button>
-        </form>
-
-        <h3>Resposta do Servidor:</h3>
-        <p id="resposta"></p>
-    </section>
-
-    <section id="crud">
-        <h2 id="titulo">Exibir dados retornados em tabela</h2>
-        <button onclick="receberDadosTabela()">Carregar Dados</button>
-        <button onclick="mostrarItensFiltrados()">Filtro idade</button>
-        <table id="dadosTabela" border="1">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Idade</th>
-                    <th>Açoes</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-    </section>
-
     <footer id="rodape">
         <img class="img-footer"
             src="https://hpg.com.br/wp-content/uploads/2025/01/portal-do-aluno-fiap-entrar-login-e-telefone.png"
@@ -149,46 +153,69 @@
         document.getElementById("faculdade").value = data.faculdade;
     }
 
-    function enviarDadosAPI() {
-        document.getElementById("formulario").addEventListener("submit", async function (event) {
-            event.preventDefault();
+    document.getElementById("formulario").addEventListener("submit", async function(event) {
+    event.preventDefault(); 
 
-            let nome = document.getElementById("nome").value;
-            let email = document.getElementById("email").value;
-
-            let dados = {
-                nome: nome,
-                email: email
-            };
-
-            try {
-                let response = await fetch("http://demo3298209.mockable.io/formulariopost", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(dados)
-                });
-
-                let respostaServidor = await response.json();
-
-                document.getElementById("resposta").innerText = JSON.stringify(respostaServidor, null, 2);
-
-            } catch (error) {
-                document.getElementById("resposta").innerText = "Erro ao enviar os dados.";
-                console.error("Erro:", error);
-            }
-        })
+    if (!validarFormulario()) {
+        return;
     }
 
+    let nome = document.getElementById("nome").value;
+    let email = document.getElementById("email").value;
 
+    let dados = {
+        nome: nome,
+        email: email
+    };
+
+    try {
+        let response = await fetch("https://cors-anywhere.herokuapp.com/http://demo3298209.mockable.io/formulariopost", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dados)
+});
+
+        // Não é possível acessar a resposta no modo no-cors
+        document.getElementById("resposta").innerText = "Dados enviados.";
+
+    } catch (error) {
+        document.getElementById("resposta").innerText = "Erro ao enviar os dados.";
+        console.error("Erro:", error);
+    }
+});
+
+    function validarFormulario() {
+        let nome = document.getElementById("nome").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let erroNome = document.getElementById("erroNome");
+        let erroEmail = document.getElementById("erroEmail");
+
+        erroNome.textContent = "";
+        erroEmail.textContent = "";
+
+        let valido = true;
+
+        if (nome === "") {
+            erroNome.textContent = "Preencha o campo Nome!";
+            valido = false;
+        }
+
+        if (email === "") {
+            erroEmail.textContent = "Preencha o campo E-mail!";
+            valido = false;
+        }
+
+        return valido;
+    }
 
     function receberDadosTabela() {
         fetch("http://demo3298209.mockable.io/usuariotabela")
             .then(response => response.json())
             .then(data => {
                 let corpoTabela = document.querySelector("#dadosTabela tbody");
-                corpoTabela.innerHTML = ""; 
+                corpoTabela.innerHTML = "";
 
                 data.forEach(user => {
                     let linha = document.createElement("tr");
@@ -253,7 +280,7 @@
 
         if (atualizarButton.textContent === "Atualizar") {
             cells.forEach((cell, index) => {
-                if (index < 3) { 
+                if (index < 3) {
                     cell.setAttribute("contenteditable", "true");
                 }
             });
@@ -274,15 +301,15 @@
             user.idade = idadeEditada;
 
             fetch("http://demo3298209.mockable.io/usuariotabela", {
-                method: "POST", 
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json", 
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(user), 
+                body: JSON.stringify(user),
             })
                 .then(response => {
                     if (response.ok) {
-                        return response.json(); 
+                        return response.json();
                     } else {
                         throw new Error("Erro ao enviar dados para a API");
                     }
